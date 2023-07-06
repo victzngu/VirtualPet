@@ -12,7 +12,7 @@ class AppTest {
    
 
     @Test void appHasAGreeting() {
-        App classUnderTest = new App();
+        VirtualPetApp classUnderTest = new VirtualPetApp();
         assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
     }
 
