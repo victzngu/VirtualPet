@@ -13,29 +13,103 @@ public class VirtualPetApp {
         String puppyName = input.nextLine();
 
         Pet dog = new Pet(puppyName);
-        petMenu = (puppyName);
 
         do {
             System.out.println("What are we doing today?");
+            System.out.println("0. Quit game");
             System.out.println("1. Feed " + puppyName + " some yummy treats.");
             System.out.println("2. Give " + puppyName + " fresh water.");
             System.out.println("3. Take " + puppyName + " for a walk.");
             System.out.println("4. Take " + puppyName + " to the Vet.");
             System.out.println("5. Play with " + puppyName + ".");
 
-            //select options 
+            // select options
             game = input.nextInt();
 
-            if(game == 5) {
+            if (game == 5) {
                 continue;
             }
 
-            //feeding the puppy
-            else if(game == 1) {
-                if(dog.getHunger() > 5) {
-                    System.out.println("");
+            // feeding the puppy
+            else if (game == 1) {
+                if (dog.getHunger() > 5) {
+                    System.out.println(puppyName + " is too full right to eat. Maybe later!");
+                    continue;
                 }
+
+                System.out.println("Thank you for the yummy treat! WOOF WOOF");
+                dog.changeHunger(+1);
+                dog.changeThirst(-1);
+                dog.changeWaste(-1);
+                showCurrentStatus(dog);
             }
-        }
+
+            // giving puppy water
+            else if (game == 2) {
+                if (dog.getThirst() > 5) {
+                    System.out.println(puppyName + " is not thirsty.");
+                    continue;
+                }
+
+                System.out.println(puppyName + " always enjoys fresh, cold water (=. WOOF WOOF");
+                dog.changeThirst(+1);
+                dog.changeWaste(-1);
+                showCurrentStatus(dog);
+            }
+
+            // taking puppy on a walk
+            else if (game == 3) {
+                if (dog.getWaste() > 5) {
+                    System.out.println(puppyName + " doesn't need to potty yet!");
+                    continue;
+                }
+
+                System.out.println(puppyName + " almost made an accident in the house!");
+                dog.changeWaste(+1);
+                dog.changeThirst(-1);
+                showCurrentStatus(dog);
+            }
+
+            // taking puppy to vet
+            else if (game == 4) {
+                if (dog.getSickness() > 5) {
+                    System.out.println(puppyName + " feels perfectly fine! WOOF WOOF");
+                    continue;
+                }
+
+                System.out.println(puppyName + " isn't feeling too well )=");
+                dog.changeSickness(+1);
+                showCurrentStatus(dog);
+            }
+
+            // playing with puppy
+            else if (game == 5) {
+                if (dog.getBoredom() > 5) {
+                    System.out.println(puppyName + " is too sleepy to play.");
+                    continue;
+                }
+
+                System.out.println(puppyName + " loves playing with you! WOOF WOOF");
+                dog.changeBoredom(+1);
+                dog.changeThirst(-1);
+                showCurrentStatus(dog);
+            } else {
+                System.out.println("Please make a selection from 1-5.");
+            }
+
+            dog.tick();
+        } while (game != 0);
+
+    }
+
+
+    private static void showCurrentStatus(Pet dog) {
+        System.out.println("Hunger: " + dog.getHunger());
+        System.out.println("Thirst: " + dog.getThirst());
+        System.out.println("Waste: " + dog.getWaste());
+        System.out.println("Sickness: " + dog.getSickness());
+        System.out.println("Boredom: " + dog.getBoredom());
+
     }
 }
+
